@@ -30,7 +30,7 @@
 
         <div v-else class="space-y-6 animate-fade-in">
           <router-link
-            to="/"
+            to="/catalogo"
             class="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-lg shadow-md text-lg font-semibold text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-transform transform hover:scale-110"
           >
             <i class="fas fa-palette mr-2"></i>

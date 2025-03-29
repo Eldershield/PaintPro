@@ -95,49 +95,22 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import axios from '@/plugins/axios'
 
-const categories = ref([
-  {
-    id: 1,
-    name: "Pinturas para el Hogar",
-    description: "Encuentra la mejor paleta de colores y acabados para transformar tu espacio.",
-    image: "/src/assets/Pinturas1.jpg",
-    products: [
-      { id: 1, name: "Pintura Mate", description: "Acabado suave y sin reflejos.", price: 15.99, colors: ["Rojo", "Azul", "Negro"], selectedColors: [] },
-      { id: 2, name: "Pintura Satinada", description: "Sutil brillo para una sensación moderna.", price: 18.99 },
-      { id: 3, name: "Pintura Lavable", description: "Ideal para espacios de alto tránsito.", price: 20.99 },
-      { id: 19, name: "Pintura Acrílica", description: "Secado rápido y alta resistencia.", price: 22.50 },
-      { id: 20, name: "Pintura Texturizada", description: "Crea efectos decorativos únicos.", price: 25.00 }
-    ]
-  },
-  {
-    id: 3,
-    name: "Herramientas de Pintura",
-    description: "Todo lo necesario para aplicar pintura con acabados profesionales.",
-    image: "/src/assets/Herramientas.jpg",
-    products: [
-      { id: 4, name: "Rodillos", description: "Diferentes tamaños y texturas para cada aplicación.", price: 10.99 },
-      { id: 5, name: "Brochas Profesionales", description: "Cerdas de alta calidad para un mejor acabado.", price: 8.99 },
-      { id: 6, name: "Cinta de Enmascarar", description: "Protege y delimita áreas con precisión.", price: 5.99 },
-      { id: 21, name: "Bandeja para Pintura", description: "Ideal para trabajar con rodillos.", price: 6.99 },
-      { id: 22, name: "Pistola de Pintura", description: "Para una aplicación uniforme y profesional.", price: 49.99 }
-    ]
-  },
-  {
-    id: 4,
-    name: "Pinturas Automotrices",
-    description: "Renueva el color y protege la carrocería de tu auto con nuestros productos premium.",
-    image: "/src/assets/Pinturas2.jpg",
-    products: [
-      { id: 7, name: "Esmalte Acrílico", description: "Durabilidad y resistencia a los rayos UV.", price: 22.99, colors: ["Rojo", "Azul", "Negro"], selectedColors: [] },
-      { id: 8, name: "Base Color", description: "Preparación ideal para un acabado perfecto.", price: 24.99, colors: ["Blanco", "Gris", "Negro"], selectedColors: [] },
-      { id: 9, name: "Barniz Protector", description: "Brillo y protección contra la intemperie.", price: 27.99, colors: ["Transparente"], selectedColors: [] },
-      { id: 23, name: "Pintura Metalizada", description: "Acabado brillante para un look moderno.", price: 30.99, colors: ["Plata", "Oro", "Cobre"], selectedColors: [] },
-      { id: 24, name: "Primario Anticorrosivo", description: "Protección extra contra la oxidación.", price: 18.50, colors: ["Gris", "Rojo"], selectedColors: [] }
-    ]
-  },
-])
+const categories = ref([])
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get('/api/categories')
+    categories.value = response.data
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  }
+}
+
+// Fetch categories when the component is mounted
+onMounted(fetchCategories)
 
 const cart = ref([])
 

@@ -5,8 +5,8 @@ import { db } from './config/db.js'
 import cors from  'cors'
 import path from 'path'
 import authRoutes from './routes/authRoutes.js'
-import cropRoutes from './routes/cropRoutes.js'
-
+import userRoutes from './routes/userRoutes.js'
+import CategoriesRoutes from './routes/CategoriesRoutes.js'
 import protect from './middleware/authMiddleware.js'
 
 // Cargar variables de entorno
@@ -23,10 +23,10 @@ app.use(express.json()); // Parsear JSON en las solicitudes
 
 // Rutas públicas (sin autenticación)
 app.use('/api/auth', authRoutes);
+app.use('/api/categories', CategoriesRoutes);
+app.use('/api/users', userRoutes, protect);
+// Rutas privadas (con autenticación)
 
-
-// Rutas protegidas (requieren autenticación)
-app.use('/api/crops', protect, cropRoutes);
 
 // Ruta para producción (si usas Vue en producción)
 if (process.env.NODE_ENV === 'production') {

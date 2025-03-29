@@ -1,34 +1,9 @@
 import express from 'express';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
 const router = express.Router();
 
-// Enviar correo electrónico de bienvenida
-const sendWelcomeEmail = (email) => {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'ingridcruz312008@gmail.com',
-            pass: 'pinguino25ewu',
-        },
-    });
 
-    const mailOptions = {
-        from: 'ingridcruz312008@gmail.com',
-        to: email,
-        subject: 'Bienvenido a PaintPro',
-        text: 'Gracias por registrarte en PaintPro. Tu cuenta ha sido creada exitosamente.',
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log('Error al enviar email:', error);
-        } else {
-            console.log('Email enviado:', info.response);
-        }
-    });
-};
 
 // Registro de usuario
 router.post('/register', async (req, res) => {
@@ -47,7 +22,7 @@ router.post('/register', async (req, res) => {
         
         await user.save();
 
-        // Generar token JWT
+        // Generar token JWt
         const token = jwt.sign(
             { userId: user._id },
             process.env.JWT_SECRET || 'tu_secreto_jwt',
